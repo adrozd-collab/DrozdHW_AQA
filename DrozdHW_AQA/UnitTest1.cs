@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Json;
 using System.Text.Json;
+using TestAQA1;
 
 namespace DrozdHW_AQA
 {
@@ -32,7 +33,41 @@ namespace DrozdHW_AQA
             UserResponseDTO userResponse = JsonSerializer.Deserialize<UserResponseDTO>(jsonGet);
             UserDataDTO user = userResponse.Data;
         }
+        
+        [Test]
+        public async Task Test3()
+        {
+            CreateUserRequestDTO request = new CreateUserRequestDTO
+            {
+                Name = "Test User",
+                Job = "Test Job"
+            };
+            
+            using HttpResponseMessage response = await client.PostAsJsonAsync("users", request);
+            string jsonPost = await response.Content.ReadAsStringAsync();
+            CreateUserResponseDTO userResponse = JsonSerializer.Deserialize<CreateUserResponseDTO>(jsonPost);
+        }
 
+        [Test]
+        public async Task Test4()
+        {
+            CreateUserRequestDTO request = new CreateUserRequestDTO
+            {
+                Name = "Test User",
+                Job = "QA Job"
+            };
+
+            using HttpResponseMessage response = await client.PutAsJsonAsync("users/2", request);
+            response.EnsureSuccessStatusCode();
+        }
+
+        [Test]
+        public async Task Test5()
+        {
+            using HttpResponseMessage response = await client.DeleteAsync("users/2");
+            response.EnsureSuccessStatusCode();
+        }
+        
         [OneTimeTearDown]
         public void TearDown()
         {
