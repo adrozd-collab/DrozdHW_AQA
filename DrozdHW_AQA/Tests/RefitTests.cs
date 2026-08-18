@@ -24,5 +24,14 @@ namespace DrozdHW_AQA.Tests.Tests
             api = provider.GetRequiredService<IUserApi>();
         }
 
+
+        [Test]
+        public async Task RefitTest1()
+        {
+            var result = await api.GetUserAsync(2);
+            Assert.That(result.Data.ID, Is.EqualTo(2));
+        }
+
+
     }
 }

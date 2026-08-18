@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace DrozdHW_AQA
 {
-    public class Tests
+    public class Testing
     {
         private static HttpClient client;
 
