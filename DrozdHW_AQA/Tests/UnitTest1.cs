@@ -2,9 +2,9 @@
 using System.Text.Json;
 using TestAQA1;
 
-namespace DrozdHW_AQA
+namespace DrozdHW_AQA.Tests
 {
-    public class Tests
+    public class Testing
     {
         private static HttpClient client;
 
