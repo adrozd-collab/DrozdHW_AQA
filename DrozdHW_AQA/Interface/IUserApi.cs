@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using TestAQA1;
-using Tests1.DTO;
 
 namespace Tests1.Interfaces
 {
