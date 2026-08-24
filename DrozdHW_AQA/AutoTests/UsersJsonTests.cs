@@ -28,5 +28,13 @@ namespace DrozdHW_AQA.AutoTests
         {
             users.First().Profile.FullName.Should().Be("Alice Johnson");
         }
+
+        [Test]
+        public void Test2_3_CheckAllIdsAreUnique()
+        {
+            var ids = users.Select(user => user.Id).ToList();
+
+            ids.Should().OnlyHaveUniqueItems();
+        }
     }
 }
