@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using FluentAssertions;
 using DrozdHW_AQA.DTO;
 
@@ -78,6 +79,15 @@ namespace DrozdHW_AQA.AutoTests
             users.Should().OnlyContain(user =>
                 user.Profile.Address.Geo.Lat >= SwedenMinLat && user.Profile.Address.Geo.Lat <= SwedenMaxLat &&
                 user.Profile.Address.Geo.Lng >= SwedenMinLng && user.Profile.Address.Geo.Lng <= SwedenMaxLng);
+        }
+
+        [Test]
+        public void Test4_CheckAllUsersStreetsAreValid()
+        {
+            users.Should().OnlyContain(user =>
+                Regex.IsMatch(user.Profile.Address.Street, @"^[A-Za-zÀ-ÖØ-öø-ÿ]") &&
+                Regex.IsMatch(user.Profile.Address.Street, @"\d+") &&
+                !Regex.IsMatch(user.Profile.Address.Street, @"^\d+$"));
         }
     }
 }
