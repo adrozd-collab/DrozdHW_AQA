@@ -47,6 +47,15 @@ namespace DrozdHW_AQA.Tests
         [Test]
         public async Task Test3()
         {
+            var request = new CreateUserRequestDTO { Name = "Test User", Job = "QA Job" };
+            var response = await api.UpdateUserAsync(2, request);
+            Assert.That(response.Name, Is.EqualTo("Test User"));
+            Assert.That(response.Job, Is.EqualTo("QA Job"));
+        }
+
+        [Test]
+        public async Task Test4()
+        {
             var deleteResult = await api.DeleteUserAsync(2);
             Assert.That(deleteResult.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
             //Assert.That((int)deleteResult.StatusCode, Is.EqualTo(204));
