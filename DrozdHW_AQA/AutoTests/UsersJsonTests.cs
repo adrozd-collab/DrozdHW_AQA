@@ -22,5 +22,11 @@ namespace DrozdHW_AQA.AutoTests
         {
             users.Should().HaveCount(10);
         }
+
+        [Test]
+        public void Test2_2_CheckFirstUserIsAliceJohnson()
+        {
+            users.First().Profile.FullName.Should().Be("Alice Johnson");
+        }
     }
 }
