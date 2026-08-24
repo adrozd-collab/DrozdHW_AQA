@@ -36,5 +36,11 @@ namespace DrozdHW_AQA.AutoTests
 
             ids.Should().OnlyHaveUniqueItems();
         }
+
+        [Test]
+        public void Test2_4_CheckAtLeastOnePremiumUser()
+        {
+            users.Should().Contain(user => user.Profile.Tags.Contains("premium"));
+        }
     }
 }
