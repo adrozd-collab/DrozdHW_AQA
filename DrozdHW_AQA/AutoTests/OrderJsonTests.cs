@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Text.Json;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using DrozdHW_AQA.DTO;
+using DrozdHW_AQA.Utils;
 
 
 namespace DrozdHW_AQA.AutoTests
@@ -16,10 +16,7 @@ namespace DrozdHW_AQA.AutoTests
         [OneTimeSetUp]
         public void Setup()
         {
-            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Resources", "OrderData.json");
-            string json = File.ReadAllText(path);
-
-            order = JsonSerializer.Deserialize<OrderDTO>(json);
+            order = JsonFileReader.ReadAndDeserialize<OrderDTO>("OrderData.json");
         }
 
         [Test]
@@ -47,7 +44,7 @@ namespace DrozdHW_AQA.AutoTests
 
             using (new AssertionScope())
             {
-                hasElectonicsCategory.Should().OnlyContain(item => item.Category == "Electronics1");
+                hasElectonicsCategory.Should().OnlyContain(item => item.Category == "Electronics");
                 hasElectonicsCategory.Should().HaveCount(3);
             }
         }

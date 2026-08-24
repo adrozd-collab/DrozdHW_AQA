@@ -1,7 +1,7 @@
-using System.Text.Json;
 using System.Text.RegularExpressions;
 using FluentAssertions;
 using DrozdHW_AQA.DTO;
+using DrozdHW_AQA.Utils;
 
 namespace DrozdHW_AQA.AutoTests
 {
@@ -17,10 +17,7 @@ namespace DrozdHW_AQA.AutoTests
         [OneTimeSetUp]
         public void Setup()
         {
-            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Resources", "UsersData.json");
-            string json = File.ReadAllText(path);
-
-            users = JsonSerializer.Deserialize<UsersRootDTO>(json).Data;
+            users = JsonFileReader.ReadAndDeserialize<UsersRootDTO>("UsersData.json").Data;
         }
 
         [Test]
