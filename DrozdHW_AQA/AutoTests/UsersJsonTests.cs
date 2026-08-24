@@ -60,5 +60,11 @@ namespace DrozdHW_AQA.AutoTests
         {
             users.Should().OnlyContain(user => user.Profile.Age >= 18 && user.Profile.Age <= 60);
         }
+
+        [Test]
+        public void Test2_8_CheckAtLeastOneAdminUser()
+        {
+            users.Should().Contain(user => user.Roles.Contains("admin"));
+        }
     }
 }
