@@ -48,5 +48,11 @@ namespace DrozdHW_AQA.AutoTests
         {
             users.Should().OnlyContain(user => !string.IsNullOrWhiteSpace(user.Profile.Address.City));
         }
+
+        [Test]
+        public void Test2_6_CheckAtLeastOneUserFromStockholm()
+        {
+            users.Should().Contain(user => user.Profile.Address.City == "Stockholm");
+        }
     }
 }
