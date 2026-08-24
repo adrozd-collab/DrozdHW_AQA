@@ -6,6 +6,11 @@ namespace DrozdHW_AQA.AutoTests
 {
     public class UsersJsonTests
     {
+        private const double SwedenMinLat = 55.0;
+        private const double SwedenMaxLat = 69.1;
+        private const double SwedenMinLng = 11.0;
+        private const double SwedenMaxLng = 24.2;
+
         private List<UserDTO> users;
 
         [OneTimeSetUp]
@@ -65,6 +70,14 @@ namespace DrozdHW_AQA.AutoTests
         public void Test2_8_CheckAtLeastOneAdminUser()
         {
             users.Should().Contain(user => user.Roles.Contains("admin"));
+        }
+
+        [Test]
+        public void Test3_CheckAllUsersCoordinatesAreWithinSweden()
+        {
+            users.Should().OnlyContain(user =>
+                user.Profile.Address.Geo.Lat >= SwedenMinLat && user.Profile.Address.Geo.Lat <= SwedenMaxLat &&
+                user.Profile.Address.Geo.Lng >= SwedenMinLng && user.Profile.Address.Geo.Lng <= SwedenMaxLng);
         }
     }
 }
