@@ -42,5 +42,11 @@ namespace DrozdHW_AQA.AutoTests
         {
             users.Should().Contain(user => user.Profile.Tags.Contains("premium"));
         }
+
+        [Test]
+        public void Test2_5_CheckAllUsersHaveNonEmptyCity()
+        {
+            users.Should().OnlyContain(user => !string.IsNullOrWhiteSpace(user.Profile.Address.City));
+        }
     }
 }
