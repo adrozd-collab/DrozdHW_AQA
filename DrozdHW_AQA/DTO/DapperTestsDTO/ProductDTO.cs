@@ -12,7 +12,7 @@ namespace DrozdHW_AQA.DTO.DapperTestsDTO
 
         string description,
 
-        long price,
+        double price,
 
         long stock,
 

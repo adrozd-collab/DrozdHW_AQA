@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,14 +6,14 @@ namespace DrozdHW_AQA.DTO.DapperTestsDTO
 {
     public record OrderDTO
         (
-        int id,
+        long id,
 
-        string userId,
+        long userId,
 
         string orderDate,
 
-        int status,
+        string status,
 
-        int totalPrice
+        double totalPrice
         );
 }
