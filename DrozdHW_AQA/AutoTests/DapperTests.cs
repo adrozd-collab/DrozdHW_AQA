@@ -49,13 +49,13 @@ namespace DrozdHW_AQA.AutoTests
         }
 
 
-        [Test] //генерация базы - раскомментить, а потом запустить тест разово
-        public async Task InitialiseTest()
-        {
-            var connectionString = "Data Source=marketplace.db";
-            await using var connection = new SqliteConnection(connectionString);
-            await connection.OpenAsync();
-            await DatabaseInitializer.InitializeAsync(connection);
-        }
+        //[Test] //генерация базы - раскомментить, а потом запустить тест разово
+        //public async Task InitialiseTest()
+        //{
+        //    var connectionString = "Data Source=marketplace.db";
+        //    await using var connection = new SqliteConnection(connectionString);
+        //    await connection.OpenAsync();
+        //    await DatabaseInitializer.InitializeAsync(connection);
+        //}
     }
 }
