@@ -7,7 +7,7 @@ using System.Text;
 using TestAQA1;
 using Tests1.Interfaces;
 
-namespace DrozdHW_AQA.Tests
+namespace DrozdHW_AQA.AutoTests
 {
     public class RefitTests
     {
