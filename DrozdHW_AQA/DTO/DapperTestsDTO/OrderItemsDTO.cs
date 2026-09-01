@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,12 +8,12 @@ namespace DrozdHW_AQA.DTO.DapperTestsDTO
         (
         long id,
 
-        string orderId,
+        long orderId,
 
-        string productId,
+        long productId,
 
         long quantity,
 
-        long unitPrice
+        double unitPrice
         );
 }
