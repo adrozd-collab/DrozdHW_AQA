@@ -37,5 +37,19 @@ namespace DrozdHW_AQA.Repositories
                 """, new { categoryName });
             return cities;
         }
+
+        public async Task<IEnumerable<long>> GetDistinctBuyerUserIdsByCategoryNameAsync(string categoryName)
+        {
+            using var db = new SqliteConnection(connection);
+            var userIds = await db.QueryAsync<long>("""
+                SELECT DISTINCT o.UserId
+                FROM Categories c
+                JOIN Products p ON p.CategoryId = c.Id
+                JOIN OrderItems oi ON oi.ProductId = p.Id
+                JOIN Orders o ON o.Id = oi.OrderId
+                WHERE c.Name = @categoryName
+                """, new { categoryName });
+            return userIds;
+        }
     }
 }
