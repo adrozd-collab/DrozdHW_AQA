@@ -100,6 +100,16 @@ namespace DrozdHW_AQA.AutoTests
             }
         }
 
+        [Test]
+        public async Task Test008AccessoriesBoughtByUsersFromDifferentCities()
+        {
+            var repo = p.Provider.GetService<ICategoryRepository>();
+            var cities = await repo.GetDistinctBuyerCitiesByCategoryNameAsync("Аксессуары");
+
+            cities.Should().NotBeNullOrEmpty();
+            cities.Should().HaveCountGreaterThan(1, "товары категории 'Аксессуары' должны покупать пользователи из разных городов");
+        }
+
 
         //[Test] //генерация базы - раскомментить, а потом запустить тест разово
         //public async Task InitialiseTest()
