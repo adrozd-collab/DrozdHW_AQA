@@ -28,6 +28,6 @@ namespace DrozdHW_AQA.Interfaces.BookStoreInterfaces
             [Header("Authorization")] string token);
 
         [Delete("/BookStore/v1/Book")]
-        Task<DeleteBookResponseDTO> DeleteBookFromUserAsync([Body] DeleteBookRequestDTO request, [Header("Authorization")] string token);
+        Task DeleteBookFromUserAsync([Body] DeleteBookRequestDTO request, [Header("Authorization")] string token);
     }
 }

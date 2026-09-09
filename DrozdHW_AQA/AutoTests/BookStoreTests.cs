@@ -10,7 +10,7 @@ using DrozdHW_AQA.Utils;
 using DrozdHW_AQA.Interfaces.BookStoreInterfaces;
 using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
-namespace Tests1.Tests
+namespace DrozdHW_AQA.AutoTests
 {
     public class BookStoreTests
     {
@@ -73,7 +73,7 @@ namespace Tests1.Tests
         }
 
         [Test]
-        public async Task AddBookToUserAsync() // тест фейлится - ожидаемо (проблемы с апи)
+        public async Task AddBookToUserAsync()
         {
             var token = await GetTokenAsync();
 
@@ -93,20 +93,36 @@ namespace Tests1.Tests
         }
 
         [Test]
-        public async Task DeleteBookByIsbn() // работает некорректно - приходит 400-я (должна 500-я), разобраться
+        public async Task DeleteBookByIsbn()
         {
             var token = await GetTokenAsync();
 
             var userId = await GetUsersIdAsync();
 
-            var request = new DeleteBookRequestDTO
+            const string isbn = "9781449331818";
+
+            // книгу нужно сначала добавить пользователю - иначе API отвечает 400 "ISBN supplied is not available in User's Collection!"
+            var addRequest = new AddCollectionOfBooksToUserDTO
             (
-                "9781449331818",
+                userId,
+                new List<CollectionOfIsbnsDTO> { new CollectionOfIsbnsDTO(isbn) }
+            );
+            try
+            {
+                await api.AddBookToUserAsync(addRequest, token);
+            }
+            catch (ApiException) // книга уже могла остаться в коллекции с прошлого запуска - для теста удаления это не проблема
+            {
+            }
+
+            var deleteRequest = new DeleteBookRequestDTO
+            (
+                isbn,
                 userId
             );
 
-            var response = await api.DeleteBookFromUserAsync(request, token);
-            response.Should().NotBeNull();
+            Func<Task> act = async () => await api.DeleteBookFromUserAsync(deleteRequest, token);
+            await act.Should().NotThrowAsync();
         }
 
         [Test]
@@ -123,8 +139,25 @@ namespace Tests1.Tests
                 new List<CollectionOfIsbnsDTO> { new CollectionOfIsbnsDTO(rndIsbn) }
             );
 
-            Func<Task> act = async () => await api.AddBookToUserAsync(request, token: null); 
+            Func<Task> act = async () => await api.AddBookToUserAsync(request, token: null);
             act.Should().ThrowAsync<ApiException>(); //.Where(p => p.StatusCode == System.Net.HttpStatusCode.BadRequest) - по статус кодам почему-то не отрабатывает
+        }
+
+        [Test]
+        public async Task AddBookToUserWithInvalidIsbnAsync()
+        {
+            var token = await GetTokenAsync();
+
+            var userId = await GetUsersIdAsync();
+
+            var request = new AddCollectionOfBooksToUserDTO
+            (
+                userId,
+                new List<CollectionOfIsbnsDTO> { new CollectionOfIsbnsDTO("INVALID_ISBN") }
+            );
+
+            Func<Task> act = async () => await api.AddBookToUserAsync(request, token);
+            await act.Should().ThrowAsync<ApiException>();
         }
 
 

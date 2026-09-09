@@ -100,6 +100,28 @@ namespace DrozdHW_AQA.AutoTests
             }
         }
 
+        [Test]
+        public async Task Test008AccessoriesBoughtByUsersFromDifferentCities()
+        {
+            var repo = p.Provider.GetService<ICategoryRepository>();
+            var cities = await repo.GetDistinctBuyerCitiesByCategoryNameAsync("Аксессуары");
+
+            cities.Should().NotBeNullOrEmpty();
+            cities.Should().HaveCountGreaterThan(1, "товары категории 'Аксессуары' должны покупать пользователи из разных городов");
+        }
+
+        [Test]
+        public async Task Test009TvBuyersAlsoBuyAccessories() // тест фейлится - ожидаемо (единственный покупатель телевизора, userId=15, аксессуары не покупал)
+        {
+            var repo = p.Provider.GetService<ICategoryRepository>();
+
+            var tvBuyers = await repo.GetDistinctBuyerUserIdsByCategoryNameAsync("Телевизоры");
+            var accessoryBuyers = await repo.GetDistinctBuyerUserIdsByCategoryNameAsync("Аксессуары");
+
+            tvBuyers.Should().NotBeEmpty();
+            tvBuyers.Should().BeSubsetOf(accessoryBuyers, "покупатели телевизоров должны покупать также и аксессуары");
+        }
+
 
         //[Test] //генерация базы - раскомментить, а потом запустить тест разово
         //public async Task InitialiseTest()
