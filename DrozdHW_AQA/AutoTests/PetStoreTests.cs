@@ -8,7 +8,7 @@ using DrozdHW_AQA.Interface.PetStoreInterfaces;
 using FluentAssertions;
 using DrozdHW_AQA.Utils;
 
-namespace Tests1.Tests
+namespace DrozdHW_AQA.AutoTests
 {
     public class PetStoreTests
     {
