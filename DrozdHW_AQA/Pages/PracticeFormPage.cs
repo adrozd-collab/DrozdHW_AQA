@@ -1,5 +1,5 @@
 using System.Globalization;
-using DrozdHW_AQA.DTO.PracticeFormDTO;
+using DrozdHW_AQA.Models.PracticeForm;
 using Microsoft.Playwright;
 
 namespace DrozdHW_AQA.Pages
@@ -44,7 +44,7 @@ namespace DrozdHW_AQA.Pages
             await page.GotoAsync(Url);
         }
 
-        public async Task FillFormAsync(StudentFormDTO student)
+        public async Task FillFormAsync(StudentFormModel student)
         {
             await FirstNameTextBox.FillAsync(student.FirstName);
             await LastNameTextBox.FillAsync(student.LastName);
