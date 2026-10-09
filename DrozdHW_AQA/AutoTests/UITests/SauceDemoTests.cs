@@ -1,5 +1,5 @@
 using DrozdHW_AQA.DTO.SauceDemoDTO;
-using DrozdHW_AQA.Utils;
+using DrozdHW_AQA.TestData;
 using FluentAssertions;
 using Microsoft.Playwright;
 using System;
@@ -25,17 +25,7 @@ namespace DrozdHW_AQA.AutoTests.UITests
             productsTitleText.Should().Contain("Products");
         }
 
-        private static IEnumerable<TestCaseData> ValidUsers()
-        {
-            var users = JsonFileReader.ReadAndDeserialize<List<SauceDemoUserDTO>>("SauceDemoUsers.json");
-
-            foreach (var user in users)
-            {
-                yield return new TestCaseData(user).SetName($"SuccessfulLogin_{user.Username}");
-            }
-        }
-
-        [TestCaseSource(nameof(ValidUsers))]
+        [TestCaseSource(typeof(SauceDemoTestData), nameof(SauceDemoTestData.ValidUsers))]
         public async Task SuccessfulLoginOfValidUsers(SauceDemoUserDTO user)
         {
             await Page.GotoAsync("https://www.saucedemo.com");
